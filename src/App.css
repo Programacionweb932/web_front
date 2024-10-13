@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+  justify-content: center;
+  color:aqua
+}
+
+.button-group button {
+  margin: 10px;
+  justify-content: center;
+}

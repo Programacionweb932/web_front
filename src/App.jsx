@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import Formulario from '../componente/Formulario'; 
-import Registro from '../componente/Registro'; 
-import Home from '../componente/Home'; 
-import mantenimientos from '../componente/mante-pre-corre';
+import Formulario from './componente/Formulario'; 
+import Registro from './componente/Registro'; 
+import Home from './componente/Home'; 
+import Mantenimiento from './componente/Mantenimiento';
+import InstalacionOS from './componente/InstalacionOS';
+import ReparacionPC from './componente/ReparacionPC';
+import AsistenciaTecnica from './componente/AsistenciaTecnica';
+import InstalacionOffice from './componente/InstalacionOffice';
 import './App.css';
 
 function App() {
-  const [view, setView] = useState('login'); // Estado para cambiar entre login y registro
-  const [user, setUser] = useState(null); // Estado para el usuario logueado
+  const [view, setView] = useState('login'); 
+  const [user, setUser] = useState(null); 
   const [registeredUsers, setRegisteredUsers] = useState([
-    { username: 'admin', password: 'admin123' } // Usuario registrado por defecto
+    { username: 'admin', password: 'admin123' } 
   ]); 
 
   // Función de manejo de inicio de sesión
@@ -20,18 +24,18 @@ function App() {
 
     if (foundUser) {
       setUser(username);
-      setView('home'); // Si las credenciales son correctas, ir a home
+      setView('home');
     } else {
       alert('Credenciales incorrectas');
     }
   };
 
-  // Renderizado de los componentes según la vista seleccionada
+  // Renderizado de la vista según el estado de `view`
   return (
     <div className="App">
       <h1>Bienvenido</h1>
 
-      {/* Botones para alternar entre login y registro */}
+      {/* Mostrar botones para alternar entre login y registro si no hay usuario logueado */}
       {user === null && (
         <div className="button-group">
           <button onClick={() => setView('login')}>Login</button>
@@ -39,9 +43,23 @@ function App() {
         </div>
       )}
 
-      {/* Mostrar la vista actual según el valor de 'view' */}
+      {/* Mostrar la vista correspondiente dependiendo del estado */}
       {user !== null ? (
-        <Home user={user} setUser={setUser} /> // Si el usuario está logueado, ir al home
+        // Si el usuario está logueado
+        view === 'home' ? (
+          <Home user={user} setUser={setUser} setView={setView} /> // Pasamos setView al Home para cambiar a las vistas de los servicios
+        ) : view === 'mantenimiento' ? (
+          <Mantenimiento setView={setView} /> 
+          
+        ) : view === 'instalacion-os' ? (
+          <InstalacionOS setView={setView} />
+        ) : view === 'reparacion' ? (
+          <ReparacionPC  setView={setView} />
+        ) : view === 'asistencia-tecnica' ? (
+          <AsistenciaTecnica setView={setView} />
+        ) : view === 'instalacion-office' ? (
+          <InstalacionOffice setView={setView} />
+        ) : null
       ) : view === 'login' ? (
         <Formulario setUser={handleLogin} /> // Mostrar formulario de login
       ) : (

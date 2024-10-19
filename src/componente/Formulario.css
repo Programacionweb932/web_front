@@ -5,8 +5,7 @@
     padding: 20px;
     min-height: 100vh;
     background-size: cover;
-    color: #7fd0ff;
-    
+    color: rgb(238, 243, 243);
 }
 
 .borde-exterior {
@@ -36,41 +35,46 @@
 .form-group {
     margin-bottom: 15px;
     align-items: center;
+    
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
     align-items: center;
-    color:#e4e8ec
+    color:#f8fbfd
+    
 }
 
 .form-group input {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
+    align-items: center;
     background-color: rgb(255, 255, 255);
     color: #000;
     border: 2px solid #acd7ff;
     padding: 0.5rem;
     border-radius: 5px;
+    
 }
 
 button {
     padding: 10px;
     background-color: #a7dfff;
+    align-items: center;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #e4e8ec;
+    background-color: #8cc9ff;
+    align-items: center;
 }
 
 .error-message {
     color: red;
     margin-top: 10px;
-    text-align: center; 
-    font-size: 14px;
+    align-items: center;
 }

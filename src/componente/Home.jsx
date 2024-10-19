@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Home.css';
 
 function Home({ user, setUser, setView }) {
-  const [showServices, setShowServices] = useState(false);
-
   const handleLogout = () => {
-    setUser(null); 
+    setUser(null);
     setView('login');
   };
 
-  const toggleServices = () => {
-    setShowServices(!showServices);
-  };
-
   const services = [
-    { name: 'Mantenimiento Preventivo y Correctivo', view: 'mantenimiento' },
-    { name: 'Instalación de Sistemas Operativos', view: 'instalacion-os' },
-    { name: 'Reparación de Portátiles y PC', view: 'reparacion' },
-    { name: 'Asistencia Técnica y Remota', view: 'asistencia-tecnica' },
-    { name: 'Instalación de Paquetes Microsoft Office', view: 'instalacion-office' }
+    { name: 'Mantenimiento Preventivo y Correctivo', view: 'mantenimiento', img: '/image/mantenimiento.jpg' },
+    { name: 'Instalación de Sistemas Operativos', view: 'instalacion-os', img: '/image/asistencia.png' },
+    { name: 'Reparación de Portátiles y PC', view: 'reparacion', img: '/image/reparacion.png' },
+    { name: 'Asistencia Técnica y Remota', view: 'asistencia-tecnica', img: '/image/asistencia.png' },
+    { name: 'Instalación de Paquetes Microsoft Office', view: 'instalacion-office', img: '/image/office.webp' }
   ];
 
   const handleServiceClick = (serviceView) => {
-    setView(serviceView); // Cambiar la vista al servicio seleccionado
+    setView(serviceView);
   };
 
   return (
@@ -32,22 +26,26 @@ function Home({ user, setUser, setView }) {
         <h2>Hola, {user}!</h2>
         <h3>¿Qué servicio desea?</h3>
       </div>
-      <button className="services-button" onClick={toggleServices}>
-        {showServices ? 'Ocultar Servicios' : 'Mostrar Servicios'}
-      </button>
-      {showServices && (
-        <div className="services-container">
-          {services.map((service, index) => (
+
+      <div className="services-container">
+        {services.map((service, index) => (
+          <div key={index} className="service-item">
+            {service.img && (
+              <img
+                src={service.img}
+                alt={service.name}
+                className="service-image"
+              />
+            )}
             <button
-              key={index}
               className="service-button"
               onClick={() => handleServiceClick(service.view)}
             >
               {service.name}
             </button>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
       <button className="logout-button" onClick={handleLogout}>
         Cerrar Sesión
       </button>

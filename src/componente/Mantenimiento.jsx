@@ -2,10 +2,30 @@ import React from 'react';
 
 function Mantenimiento({ setView }) {
   return (
-    <div>
+    <div className="mantenimiento-container"> 
       <h1>Mantenimiento Preventivo y Correctivo</h1>
-      <p>Esta es la página del servicio de mantenimiento.</p>
-      <button onClick={() => setView('home')}>Volver a Servicios</button>
+      <p>El mantenimiento preventivo se realiza a equipos en funcionamiento con el fin de prevenir posibles daños
+        causados por uso o desgaste,< br/> a diferencia del mantenimiento correctivo que repara aquellos que dejan de 
+        funcionar o están dañados.
+      </p>
+
+      <div className="image-container"> 
+        <img
+          src="/public/image/img1.png"
+          alt="Mantenimiento"
+        />
+        <div className="button-container">
+          <button onClick={() => setView('home')} className="volver-servicio-btn">
+            Volver a Servicios
+          </button>
+          <button 
+            className="solicitar-servicio-btn"
+            onClick={() => setView('agendar-cita')}
+          >
+            Agendar Cita
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

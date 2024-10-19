@@ -6,7 +6,7 @@ function Formulario({ setUser }) {
   const [contraseña, setContraseña] = useState('');
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (usuario === '' || contraseña === '') {
@@ -14,30 +14,8 @@ function Formulario({ setUser }) {
       return;
     }
 
-    try {
-      // Enviar credenciales al backend
-      const response = await fetch('http://localhost:5000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username: usuario, password: contraseña }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Si la respuesta es exitosa (login correcto)
-        setUser(data.token);  // Guardar el token (puedes almacenarlo en el localStorage si lo necesitas)
-        setError(false);
-      } else {
-        // Si las credenciales son incorrectas o hay un error
-        setError(true);
-      }
-    } catch (error) {
-      console.error('Error al conectarse al backend', error);
-      setError(true);
-    }
+    setError(false);
+    setUser(usuario, contraseña); // Llama a la función de login en lugar de setUser([])
   };
 
   return (
@@ -67,10 +45,9 @@ function Formulario({ setUser }) {
         </div>
         
         <button type="submit">Iniciar Sesión</button>
-
-        {/* Mensaje de error debajo del botón */}
-        {error && <p className='error-message'>Credenciales incorrectas o campos vacíos</p>}
       </form>
+
+      {error && <p className='error-message'>Todos los campos son obligatorios</p>}
     </section>
   );
 }

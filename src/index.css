@@ -12,8 +12,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  body {
+    overflow: scroll; /* Siempre muestra la barra de scroll */
+  }
  
-  height: 100vh;
+  height: 120vh;
   
 
   background-image: url('https://aodatacloud.es/wp-content/uploads/2024/04/Los-4-tipos-de-mantenimiento-mas-utilizados-en-el-mundo-empresarial.png');

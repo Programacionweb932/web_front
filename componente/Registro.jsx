@@ -8,7 +8,7 @@ function Registro({ setRegisteredUsers }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -16,9 +16,27 @@ function Registro({ setRegisteredUsers }) {
       return;
     }
 
-    // Agregar nuevo usuario a la lista de usuarios registrados
-    setRegisteredUsers(prevUsers => [...prevUsers, { username, password }]);
-    alert('Registro exitoso');
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setRegisteredUsers(prevUsers => [...prevUsers, { username, password }]); // Actualiza el estado local
+        alert('Registro exitoso');
+      } else {
+        setError(data.message); // Maneja el error devuelto por la API
+      }
+    } catch (error) {
+      console.error('Error al registrar:', error);
+      setError('Error al registrar el usuario.');
+    }
   };
 
   return (

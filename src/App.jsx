@@ -1,41 +1,49 @@
 import React, { useState } from 'react';
-import Formulario from './componente/Formulario'; 
-import Registro from './componente/Registro'; 
-import Home from './componente/Home'; 
-import Mantenimiento from './componente/Mantenimiento';
-import InstalacionOS from './componente/InstalacionOS';
-import ReparacionPC from './componente/ReparacionPC';
-import AsistenciaTecnica from './componente/AsistenciaTecnica';
-import InstalacionOffice from './componente/InstalacionOffice';
+import Formulario from '../componente/Formulario'; 
+import Registro from '../componente/Registro'; 
+import Home from '../componente/Home'; 
+import Mantenimiento from '../componente/Mantenimiento';
+import AgendarCita from '../componente/AgendarCita';
+import InstalacionOS from '../componente/InstalacionOS';
+import ReparacionPC from '../componente/ReparacionPC';
+import AsistenciaTecnica from '../componente/AsistenciaTecnica';
+import InstalacionOffice from '../componente/InstalacionOffice';
 import './App.css';
 
 function App() {
   const [view, setView] = useState('login'); 
   const [user, setUser] = useState(null); 
   const [registeredUsers, setRegisteredUsers] = useState([
-    { username: 'admin', password: 'admin123' } 
   ]); 
 
-  // Función de manejo de inicio de sesión
-  const handleLogin = (username, password) => {
-    const foundUser = registeredUsers.find(
-      user => user.username === username && user.password === password
-    );
+  
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/login', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (foundUser) {
-      setUser(username);
-      setView('home');
-    } else {
-      alert('Credenciales incorrectas');
+      if (response.ok) {
+        const data = await response.json(); 
+        setUser(data.username); 
+        setView('home'); 
+      } else {
+        const errorData = await response.json(); 
+        alert(errorData.message || 'Credenciales incorrectas'); 
+      }
+    } catch (error) {
+      alert('Error al iniciar sesión.'); 
     }
   };
 
-  // Renderizado de la vista según el estado de `view`
+  
   return (
     <div className="App">
       <h1>Bienvenido</h1>
 
-      {/* Mostrar botones para alternar entre login y registro si no hay usuario logueado */}
+      {/* Botones para alternar entre login y registro */}
       {user === null && (
         <div className="button-group">
           <button onClick={() => setView('login')}>Login</button>
@@ -43,11 +51,11 @@ function App() {
         </div>
       )}
 
-      {/* Mostrar la vista correspondiente dependiendo del estado */}
-      {user !== null ? (
-        // Si el usuario está logueado
+     {/* Mostrar la vista correspondiente dependiendo del estado */}
+     {user !== null ? (
+     
         view === 'home' ? (
-          <Home user={user} setUser={setUser} setView={setView} /> // Pasamos setView al Home para cambiar a las vistas de los servicios
+          <Home user={user} setUser={setUser} setView={setView} /> 
         ) : view === 'mantenimiento' ? (
           <Mantenimiento setView={setView} /> 
           
@@ -59,11 +67,13 @@ function App() {
           <AsistenciaTecnica setView={setView} />
         ) : view === 'instalacion-office' ? (
           <InstalacionOffice setView={setView} />
+        ) : view === 'agendar-cita' ? (
+          <AgendarCita setView={setView} /> 
         ) : null
       ) : view === 'login' ? (
-        <Formulario setUser={handleLogin} /> // Mostrar formulario de login
+        <Formulario setUser={handleLogin} /> 
       ) : (
-        <Registro setRegisteredUsers={setRegisteredUsers} /> // Mostrar formulario de registro
+        <Registro setRegisteredUsers={setRegisteredUsers} /> 
       )}
     </div>
   );

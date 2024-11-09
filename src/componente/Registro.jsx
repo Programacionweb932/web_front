@@ -17,7 +17,7 @@ function Registro({ setRegisteredUsers }) {
     }
 
     try {
-      const response = await fetch('https:web-back-nu.vercel.app/api/register', {
+      const response = await fetch('https://web-back-nu.vercel.app/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

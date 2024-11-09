@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import Formulario from '../componente/Formulario'; 
-import Registro from '../componente/Registro'; 
-import Home from '../componente/Home'; 
-import Mantenimiento from '../componente/Mantenimiento';
-import AgendarCita from '../componente/AgendarCita';
-import InstalacionOS from '../componente/InstalacionOS';
-import ReparacionPC from '../componente/ReparacionPC';
-import AsistenciaTecnica from '../componente/AsistenciaTecnica';
-import InstalacionOffice from '../componente/InstalacionOffice';
+import Formulario from './componente/Formulario'; 
+import Registro from './componente/Registro'; 
+import Home from './componente/Home'; 
+import Mantenimiento from './componente/Mantenimiento';
+import AgendarCita from './componente/AgendarCita';
+import InstalacionOS from './componente/InstalacionOS';
+import ReparacionPC from './componente/ReparacionPC';
+import AsistenciaTecnica from './componente/AsistenciaTecnica';
+import InstalacionOffice from './componente/InstalacionOffice';
 import './App.css';
 
 function App() {

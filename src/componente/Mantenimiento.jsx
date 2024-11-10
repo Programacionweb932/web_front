@@ -12,7 +12,7 @@ function Mantenimiento({ setView }) {
 
       <div className="image-container"> 
         <img
-          src="/public/image/img1.png"
+          img="/public/image/img1.png"
           alt="Mantenimiento"
         />
         <div className="button-container">

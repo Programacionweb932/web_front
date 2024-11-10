@@ -17,7 +17,7 @@ function Login({ setUser }) {
 
     try {
       // Realiza la solicitud POST a tu API de backend
-      const response = await fetch('https://web-front-kappa.vercel.app//api/login', {
+      const response = await fetch('https://web-front-kappa.vercel.app/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }) // Envía el username y password como JSON

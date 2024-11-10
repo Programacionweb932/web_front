@@ -11,12 +11,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  body {
-    overflow: scroll; /* Siempre muestra la barra de scroll */
-  }
- 
-  height: 120vh;
 }
 
 body {

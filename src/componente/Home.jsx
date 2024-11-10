@@ -23,8 +23,8 @@ function Home({ user, setUser, setView }) {
     <div className="home-container">
       <div className="welcome-message">
         <h1>Bienvenido al Mundo de la Tecnología</h1>
-        <h2>Hola, {user}!</h2>
-        <h3>¿Qué servicio desea?</h3>
+        <h2>Hola,{user}!</h2>
+        <h3>¿Qué servicio deseas?</h3>
       </div>
 
       <div className="services-container">

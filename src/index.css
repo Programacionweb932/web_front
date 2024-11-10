@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #6fa9ff;
+  background-color: #000000;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,12 +17,6 @@
   }
  
   height: 120vh;
-  
-
-  background-image: url('https://aodatacloud.es/wp-content/uploads/2024/04/Los-4-tipos-de-mantenimiento-mas-utilizados-en-el-mundo-empresarial.png');
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat;
 }
 
 body {

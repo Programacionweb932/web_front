@@ -12,8 +12,8 @@ function Mantenimiento({ setView }) {
 
       <div className="image-container"> 
         <img
-          img="/public/image/img1.png"
-          alt="Mantenimiento"
+          src="/image/img1.png"
+          alt="Mantenimientos"
         />
         <div className="button-container">
           <button onClick={() => setView('home')} className="volver-servicio-btn">

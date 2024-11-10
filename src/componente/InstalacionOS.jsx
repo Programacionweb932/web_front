@@ -11,7 +11,7 @@ function InstalacionOS({ setView }) {
   
         <div className="image-container"> 
         <img
-          src="/public/image/sistemasOperativos.jpg"
+          src="/image/sistemasOperativos.jpg"
           alt="sistemasOperativos"
         />
 

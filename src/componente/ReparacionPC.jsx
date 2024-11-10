@@ -11,7 +11,7 @@ function ReparacionPC({ setView }) {
 
         <div className="image-container"> 
         <img
-          src="/public/image adentro/reparacion.png"
+          src="/image adentro/reparacion.png"
           alt="Reparacion PC"
         />
 

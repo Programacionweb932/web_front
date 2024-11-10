@@ -11,7 +11,7 @@ function AsistenciaTecnica({ setView }) {
         
         <div className="image-container-asist"> 
         <img
-          src="/public/image adentro/asistencia.png"
+          src="/image adentro/asistencia.png"
           alt="Reparacion PC"
         />
 

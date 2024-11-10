@@ -11,7 +11,7 @@ function InstalacionOffice({ setView }) {
 
         <div className="image-container"> 
         <img
-          src="/public/image adentro/office.png"
+          src="/image adentro/office.png"
           alt="sistemasOperativos"
         />
 

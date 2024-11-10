@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AgendarCita.css';
+import '../styles/AgendarCita.css'
 
 function AgendarCita({ setView }) {
   const [nombre, setNombre] = useState('');

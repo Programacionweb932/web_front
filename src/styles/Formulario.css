@@ -1,0 +1,72 @@
+.formulario-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff15;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  }
+  
+  .formulario-container h1 {
+    text-align: center;
+    color: #ffffff; /* Color del título */
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  
+  .formulario-container label {
+    font-size: 14px;
+    color: #e02c2c18;
+  }
+  
+  .formulario-container input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #000000f6;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color:#e9eaf0b4 
+  }
+  
+  input:focus {
+    border-color: #3498db; /* Color de borde al enfocar el input */
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #3498db; /* Color de fondo del botón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #2980b9; /* Color de fondo al hacer hover */
+  }
+  
+  .error-message {
+    color: #e74c3c; /* Color del texto de error */
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Formulario.css';
+import '../styles/Formulario.css'
 
 function Formulario({ setUser }) {
   const [usuario, setUsuario] = useState('');
@@ -20,7 +20,7 @@ function Formulario({ setUser }) {
 
   return (
     <section className="formulario-container">
-      <h1>Login</h1>
+      <h1>INICIO DE SESION</h1>
       <form className='formulario' onSubmit={handleSubmit}>
         <div className='form-group'>
           <label htmlFor='usuario'>Usuario</label>

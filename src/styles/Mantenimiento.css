@@ -1,11 +1,22 @@
 .mantenimiento-container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f0f4f8;
   padding: 20px;
+}
+
+.mantenimiento-container h1{
+  color: rgb(248, 248, 248);
+  font-size: 26px;
+  margin-bottom: 15px;
+}
+
+.mantenimiento-container p{
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: aliceblue;
 }
 
 .image-container {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Registro.css';
+import '../styles/Registro.css';
 
 function Registro({ setRegisteredUsers }) {
   const [username, setUsername] = useState('');

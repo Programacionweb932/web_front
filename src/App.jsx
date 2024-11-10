@@ -41,11 +41,11 @@ function App() {
   
   return (
     <div className="App">
-      <h1>Bienvenido</h1>
-
+     
       {/* Botones para alternar entre login y registro */}
       {user === null && (
         <div className="button-group">
+          <h1>EL MUNDO DE LA TECNOLOGIA</h1>
           <button onClick={() => setView('login')}>Login</button>
           <button onClick={() => setView('registro')}>Registro</button>
         </div>

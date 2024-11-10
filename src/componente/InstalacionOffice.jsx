@@ -1,11 +1,20 @@
 import React from 'react';
+import "../styles/InstalacionOffice.css";
+
 
 function InstalacionOffice({ setView }) {
   return (
-    <div>
+    <div className='container-office'>
       <h1>Instalacion de Paquete de Microsoft Office</h1>
       <p>Instalamos  la mejor aplicación de productividad diaria que te ayuda a crear, 
         editar y compartir mientras viajas con Word, Excel y PowerPoint</p>
+
+        <div className="image-container"> 
+        <img
+          src="/public/image adentro/office.png"
+          alt="sistemasOperativos"
+        />
+
         <div className="button-container">
   <button onClick={() => setView('home')} className="volver-servicio-btn">
     Volver a Servicios
@@ -16,6 +25,7 @@ function InstalacionOffice({ setView }) {
   >
     Agendar Cita
   </button>
+</div>
 </div>
 </div>
   );

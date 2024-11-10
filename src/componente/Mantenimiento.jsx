@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Mantenimiento.css'
 
 function Mantenimiento({ setView }) {
   return (

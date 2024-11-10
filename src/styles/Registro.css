@@ -31,8 +31,9 @@ h1 {
 .input-field input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #0a0a0a;  
+  border: 1px solid #f9f8f8;  
   border-radius: 4px;
+  background-color:#e9eaf0b4 
 }
 
 .submit-button {

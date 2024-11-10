@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
-import './login.css'; 
+import '../styles/Login.css'; 
 
-function Login({ setUser }) {
+function Login({ setUser }) { // Recibe setUser como prop
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate(); // Crea una instancia de useNavigate
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevenimos que la página se recargue
+    event.preventDefault();
     if (!username || !password) {
       setError('Por favor, complete todos los campos.');
       return;
     }
 
     try {
-      // Realiza la solicitud POST a tu API de backend
-      const response = await fetch('https://web-back-blond.vercel.app/api/login', {
+      const response = await fetch('https://web-back-blond.vercel.app/api/login', { // Asegúrate de que la URL sea correcta
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }) // Envía el username y password como JSON
+        body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
-        const data = await response.json(); // Obtiene la respuesta de la API
-        setUser(data.username); // Actualiza el estado del usuario en el frontend
-        navigate('/home'); // Redirige a la página de inicio
+        setError(''); // Limpia el mensaje de error
+        const data = await response.json(); // Obtiene los datos de la respuesta
+        setUser(data.username); // Usa setUser para guardar el usuario logueado
+        navigate('/home'); // Redirige al usuario a la página de inicio
       } else {
-        const errorData = await response.json(); // Obtiene el error de la respuesta
-        setError(errorData.message || 'Usuario o contraseña incorrectos.');
+        const errorData = await response.json(); // Obtiene el mensaje de error del backend
+        setError(errorData.message || 'Usuario o contraseña incorrectos.'); // Muestra el mensaje de error
       }
     } catch (error) {
-      setError('Error al iniciar sesión.'); // Maneja errores de red
+      setError('Error al iniciar sesión.'); // Maneja errores de la red
     }
   };
 

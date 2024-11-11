@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import Formulario from './componente/Formulario'; 
 import Registro from './componente/Registro'; 
 import Home from './componente/Home'; 
+import HomeTicket from './componente/HomeTicket'; 
 import Mantenimiento from './componente/Mantenimiento';
 import AgendarCita from './componente/AgendarCita';
 import InstalacionOS from './componente/InstalacionOS';
 import ReparacionPC from './componente/ReparacionPC';
 import AsistenciaTecnica from './componente/AsistenciaTecnica';
 import InstalacionOffice from './componente/InstalacionOffice';
+import Ticket from './componente/TicketComponent';
 import './App.css';
 
 function App() {
@@ -56,6 +58,10 @@ function App() {
      
         view === 'home' ? (
           <Home user={user} setUser={setUser} setView={setView} /> 
+        ) : view === 'home-ticket' ? (  // Vista para los tickets
+          <HomeTicket 
+            setView={setView} 
+          />
         ) : view === 'mantenimiento' ? (
           <Mantenimiento setView={setView} /> 
           
@@ -69,6 +75,8 @@ function App() {
           <InstalacionOffice setView={setView} />
         ) : view === 'agendar-cita' ? (
           <AgendarCita setView={setView} /> 
+        ) :  view === 'ticket' ? (
+          <Ticket setView={setView} />
         ) : null
       ) : view === 'login' ? (
         <Formulario setUser={handleLogin} /> 

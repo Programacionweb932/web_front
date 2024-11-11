@@ -34,3 +34,17 @@ body {
     background-color: #0056b3; /* Color de fondo al pasar el mouse */
   }
   
+  .generar-home-ticket-btn {
+    /* Estiliza el botón de generar ticket según tus necesidades */
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* Espaciado si es necesario */
+  }
+  
+  .generar-home-ticket-btn:hover {
+    background-color: #45a049; /* Color al pasar el ratón */
+  }

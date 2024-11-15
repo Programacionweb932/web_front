@@ -13,7 +13,7 @@ const TicketComponent = ({ setView }) => {  // Recibe setView como prop
 
   const handleGenerateTicket = async () => {
     try {
-      const response = await fetch('https://web-back-eight.vercel.app/api/ticket', {
+      const response = await fetch('https://web-back-p.vercel.app/api/ticket', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description, subject, email, name }),

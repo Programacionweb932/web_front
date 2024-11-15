@@ -35,7 +35,7 @@ const TicketComponent = ({ setView }) => {  // Recibe setView como prop
 
   const fetchTicketsHistory = async () => {
     try {
-      const response = await fetch('https://web-back-eight.vercel.app/api/tickets', {
+      const response = await fetch('https://web-back-p.vercel.app/api/tickets', {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${token}` },
       });

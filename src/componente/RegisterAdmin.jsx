@@ -19,7 +19,7 @@ function RegistroAdmin({ setRegisteredUsers }) {
     }
 
     try {
-      const response = await fetch('https://web-back-eight.vercel.app/api/registroAdmin', {
+      const response = await fetch('https://web-back-p.vercel.app/api/registroAdmin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usuario: username, correo: email, contraseña: password }),

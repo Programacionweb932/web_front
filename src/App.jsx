@@ -49,7 +49,9 @@ function App() {
 
   const handleNavigateToLogin = () => {
     setView('login');
+    setView('admin')
     navigate('/login'); 
+    navigate('/admin');
   };
 
   return (

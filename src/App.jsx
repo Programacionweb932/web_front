@@ -28,7 +28,7 @@ function App() {
 
   const handleLogin = async (username, password) => {
     try {
-      const response = await fetch('https://web-back-eight.vercel.app/api', { 
+      const response = await fetch('https://web-back-eight.vercel.app/api/admin', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

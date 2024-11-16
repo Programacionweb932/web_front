@@ -9,7 +9,7 @@ function Home({ user, setUser, setView }) {
 
   const services = [
     { name: 'Mantenimiento Preventivo y Correctivo', view: 'mantenimiento', img: '/image/mantenimiento.jpg' },
-    { name: 'Instalación de Sistemas Operativos', view: 'instalacion-os', img: '/image/asistencia.png' },
+    { name: 'Instalación de Sistemas Operativos', view: 'instalacion-os', img: '/image/sistemaO.png' },
     { name: 'Reparación de Portátiles y PC', view: 'reparacion', img: '/image/reparacion.png' },
     { name: 'Asistencia Técnica y Remota', view: 'asistencia-tecnica', img: '/image/asistencia.png' },
     { name: 'Instalación de Paquetes Microsoft Office', view: 'instalacion-office', img: '/image/office.webp' }

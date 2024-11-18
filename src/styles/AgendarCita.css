@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Contenedor principal */
 .agendar-cita-container {
   max-width: 600px;
@@ -107,3 +108,76 @@
     padding: 8px;
   }
 }
+=======
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+form div {
+  margin-bottom: 15px;
+}
+
+form label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+/* Mensajes de éxito o error */
+p {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+p.error {
+  color: red;
+}
+
+p.success {
+  color: green;
+}
+>>>>>>> fa3e3dbe3f4f6254aff066d5dd2c70d8eac725fc

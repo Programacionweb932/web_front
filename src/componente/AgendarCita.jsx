@@ -14,7 +14,7 @@ const AgendarCita = ({ setView }) => { // Recibe setView como prop
   // Función para obtener las horas disponibles
   const fetchAvailableHours = async (selectedDate) => {
     try {
-      const response = await fetch(`https://web-back-p.vercel.app/api/agenda/hours?date=${selectedDate}`);
+      const response = await fetch(`http://localhost:5000/api/agenda/hours?date=${selectedDate}`);
       if (!response.ok) {
         throw new Error('Error al obtener las horas disponibles');
       }
@@ -38,7 +38,7 @@ const AgendarCita = ({ setView }) => { // Recibe setView como prop
     e.preventDefault();
 
     try {
-      const response = await fetch('https://web-back-p.vercel.app/api/agenda', {
+      const response = await fetch('http://localhost:5000/api/agenda', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

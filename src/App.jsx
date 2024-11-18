@@ -12,8 +12,11 @@ import InstalacionOS from './componente/InstalacionOS';
 import ReparacionPC from './componente/ReparacionPC';
 import AsistenciaTecnica from './componente/AsistenciaTecnica';
 import InstalacionOffice from './componente/InstalacionOffice';
-import Ticket from './componente/TicketComponent';
+import HistorialTicket from './componente/HistorialTicket';
+import TicketComponent from './componente/TicketComponent';
+import Blog from './componente/Blog';
 import './App.css';
+
 
 function App() {
   const [view, setView] = useState('login');
@@ -37,8 +40,17 @@ function App() {
 
       if (response.ok) {
         const data = await response.json();
-        setUser(data.username);
-        setView('home');
+        const loggedInUser = data.user;  // Asumiendo que el backend devuelve un objeto de usuario con el rol
+        setUser(loggedInUser);
+
+        // Verificar el rol y redirigir al usuario según sea 'admin' o 'user'
+        if (loggedInUser.role === 'admin') {
+          setView('home-admin');
+          navigate('/home-admin');
+        } else {
+          setView('home');
+          navigate('/home');
+        }
       } else {
         const errorData = await response.json();
         alert(errorData.message || 'Credenciales incorrectas');
@@ -64,33 +76,40 @@ function App() {
       )}
 
       {/* Mostrar la vista correspondiente dependiendo del estado */}
-      {user !== null ? (
-        view === 'home' ? (
-          <Home user={user} setUser={setUser} setView={setView} />
-        ) : view === 'home-ticket' ? (
-          <HomeTicket setView={setView} />
-        ) : view === 'mantenimiento' ? (
-          <Mantenimiento setView={setView} />
-        ) : view === 'instalacion-os' ? (
-          <InstalacionOS setView={setView} />
-        ) : view === 'reparacion' ? (
-          <ReparacionPC setView={setView} />
-        ) : view === 'asistencia-tecnica' ? (
-          <AsistenciaTecnica setView={setView} />
-        ) : view === 'instalacion-office' ? (
-          <InstalacionOffice setView={setView} />
-        ) : view === 'agendar-cita' ? (
-          <AgendarCita setView={setView} />
-        ) : view === 'ticket' ? (
-          <Ticket setView={setView} />
-        ) : null
-      ) : view === 'login' ? (
-        <Formulario setUser={handleLogin} />
-      ) : view === 'registro-admin' ? (
-        <RegisterAdmin setRegisteredUsers={setRegisteredUsers} />
-      ) : (
-        <Registro setRegisteredUsers={setRegisteredUsers} />
-      )}
+      {
+  user !== null ? (
+    view === 'home' ? (
+      <Home user={user} setUser={setUser} setView={setView} />
+    ) : view === 'home-admin' ? (
+      <HomeAdmin setView={setView} />
+    ) : view === 'home-ticket' ? (
+      <HomeTicket setView={setView} />
+    ) : view === 'mantenimiento' ? (
+      <Mantenimiento setView={setView} />
+    ) : null
+    ) : view === 'instalacion-os' ? (
+      <InstalacionOS setView={setView} />
+    ) : view === 'reparacion' ? (
+      <ReparacionPC setView={setView} />
+    ) : view === 'asistencia-tecnica' ? (
+      <AsistenciaTecnica setView={setView} />
+    ) : view === 'instalacion-office' ? (
+      <InstalacionOffice setView={setView} />
+    ) : view === 'blog' ? (
+      <Blog setView={setView} />
+    ) : view === 'agendar-cita' ? (
+      <AgendarCita setView={setView} />
+    ) : view === 'ticket' ? (
+      <Ticket setView={setView} />
+  ) : view === 'login' ? (
+    <Formulario setUser={handleLogin} />
+  ) : view === 'registro-admin' ? (
+    <RegisterAdmin setRegisteredUsers={setRegisteredUsers} />
+  ) : (
+    <Registro setRegisteredUsers={setRegisteredUsers} />
+  )
+}
+
     </div>
   );
 }
@@ -105,6 +124,16 @@ export default function AppWrapper() {
         <Route path="/admin" element={<RegisterAdmin />} />
         <Route path="/home-admin" element={<HomeAdmin />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/mantenimiento" element={<Mantenimiento />} />
+        <Route path="/home-ticket" element={<HomeTicket />} />
+        <Route path="/historial-ticket" element={<HistorialTicket />} />
+        <Route path="/agendar-cita" element={<AgendarCita />} />
+        <Route path="/ticket" element={<TicketComponent />} />
+        <Route path="/instalacion-os" element={<InstalacionOS />} />
+        <Route path="/reparacion" element={<ReparacionPC />} />
+        <Route path="/asistencia-tecnica" element={<AsistenciaTecnica />} />
+        <Route path="/instalacion-office" element={<InstalacionOffice />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
     </Router>
   );

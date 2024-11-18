@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import '../styles/RegisterAdmin.css';
 import { useNavigate } from 'react-router-dom';
 
-function RegisterAdmin({ setRegisteredUsers }) {
+function RegisterAdmin() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
@@ -11,30 +12,27 @@ function RegisterAdmin({ setRegisteredUsers }) {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-  
+
     if (password !== confirmPassword) {
       alert('Las contraseñas no coinciden');
       return;
     }
-  
-    // Verificar que los campos no estén vacíos
-    if (!username || !password) {
-      alert('El nombre de usuario y la contraseña son obligatorios');
+
+    if (!username || !email || !password) {
+      alert('Todos los campos son obligatorios');
       return;
     }
-  
+
     try {
       const response = await fetch('https://web-back-p.vercel.app/api/Adminregister', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, email, password }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
-        // Si el registro fue exitoso, actualizamos los usuarios registrados
-        setRegisteredUsers(prevUsers => [...prevUsers, { username, password }]);
         alert('Registro exitoso');
         navigate('/login'); // Redirigir a la página de login
       } else {
@@ -60,6 +58,15 @@ function RegisterAdmin({ setRegisteredUsers }) {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>

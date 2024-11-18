@@ -2,18 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/HomeAdmin.css';
 
-function HomeAdmin({ user, setUser }) {
+function HomeAdmin() {
   const [winners, setWinners] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Verificar si el usuario está logueado y es admin
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || user.role !== 'admin') {
+      navigate('/login'); // Si no es admin o no está logueado, redirigir al login
+    }
+  }, [navigate]);
+
   const handleLogout = () => {
-    navigate('/login'); // Redirigir a login
+    localStorage.removeItem('user'); // Eliminar el usuario del localStorage
+    navigate('/login'); // Redirigir al login
   };
 
   return (
     <div className="home-admin">
       <h1>Tickets Administración</h1>
-  
 
       <h2>Lista de Tickets</h2>
       <table className="ticket-table">
@@ -22,8 +30,8 @@ function HomeAdmin({ user, setUser }) {
             <th>Ticket</th>
             <th>Tema</th>
             <th>Estado Ticket</th>
-            <th>Fecha Creacion</th>
-            <th>Tecnico Asignado</th>
+            <th>Fecha Creación</th>
+            <th>Técnico Asignado</th>
           </tr>
         </thead>
         <tbody>
@@ -37,11 +45,11 @@ function HomeAdmin({ user, setUser }) {
             </tr>
           ))}
         </tbody>
-      </table> 
-      < br/> 
-      < br/>
+      </table>
+      <br />
+      <br />
       <button className="logout-button" onClick={handleLogout}>
-            Cerrar Sesión
+        Cerrar Sesión
       </button>
     </div>
   );

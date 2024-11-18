@@ -1,7 +1,9 @@
 import React from 'react';
 import '../styles/AsistenciaTecnica.css'
+import { useNavigate } from 'react-router-dom'
 
 function AsistenciaTecnica({ setView }) {
+  const navigate = useNavigate();
   return (
     <div className='asistencia-container'>
       <h1>Asistencia Tecnica y Remota</h1>
@@ -16,24 +18,18 @@ function AsistenciaTecnica({ setView }) {
         />
 
         <div className="button-container">
-  <button onClick={() => setView('home')} className="volver-servicio-btn">
-    Volver a Servicios
-  </button>
-  <button 
-    className="solicitar-servicio-btn"
-    onClick={() => setView('agendar-cita')}
-  >
-    Agendar Cita
-  </button>
-          <button 
-            className="generar-home-ticket-btn" // Nueva clase CSS para el botón de generar ticket
-            onClick={() => setView('home-ticket')} // Lógica para cambiar la vista a 'ticket'
-          >
-            Gestionar Ticket
-          </button>
-</div>
-</div>
-</div>
+        <button onClick={() => navigate('/home')} className="volver-servicio-btn">
+          Volver a Servicios
+        </button>
+        <button onClick={() => navigate('/agendar-cita')} className="solicitar-servicio-btn">
+          Agendar Cita
+        </button>
+        <button onClick={() => navigate('/home-ticket')} className="generar-home-ticket-btn">
+          Gestionar Ticket
+        </button>
+      </div>
+    </div>
+    </div>
   );
 }
 

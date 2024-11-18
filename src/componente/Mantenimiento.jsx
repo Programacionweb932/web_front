@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Mantenimiento.css'
 
-function Mantenimiento({ setView }) {
+function Mantenimiento() {
+  const navigate = useNavigate();
+
   return (
     <div className="mantenimiento-container"> 
       <h1>Mantenimiento Preventivo y Correctivo</h1>
@@ -15,24 +18,18 @@ function Mantenimiento({ setView }) {
           src="/image/img1.png"
           alt="Mantenimientos"
         />
-        <div className="button-container">
-          <button onClick={() => setView('home')} className="volver-servicio-btn">
-            Volver a Servicios
-          </button>
-          <button 
-            className="solicitar-servicio-btn"
-            onClick={() => setView('agendar-cita')}
-          >
-            Agendar Cita
-          </button>
-          <button 
-            className="generar-home-ticket-btn" // Nueva clase CSS para el botón de generar ticket
-            onClick={() => setView('home-ticket')} // Lógica para cambiar la vista a 'ticket'
-          >
-            Gestionar Ticket
-          </button>
-        </div>
+      <div className="button-container">
+        <button onClick={() => navigate('/home')} className="volver-servicio-btn">
+          Volver a Servicios
+        </button>
+        <button onClick={() => navigate('/agendar-cita')} className="solicitar-servicio-btn">
+          Agendar Cita
+        </button>
+        <button onClick={() => navigate('/home-ticket')} className="generar-home-ticket-btn">
+          Gestionar Ticket
+        </button>
       </div>
+    </div>
     </div>
   );
 }

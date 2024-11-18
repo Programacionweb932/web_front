@@ -1,58 +1,131 @@
-import React, { useState } from 'react';
-import '../styles/AgendarCita.css'
+import React, { useState, useEffect } from 'react';
+import '../styles/AgendarCita.css';
+import { useNavigate } from 'react-router-dom';
 
-function AgendarCita({ setView }) {
-  const [nombre, setNombre] = useState('');
-  const [fecha, setFecha] = useState('');
+const AgendarCita = ({ setView }) => { // Recibe setView como prop
+  const [date, setDate] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [hora, setHora] = useState('');
+  const [availableHours, setAvailableHours] = useState([]);
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Usamos navigate para redirigir
 
-  const handleAgendar = (e) => {
+  // Función para obtener las horas disponibles
+  const fetchAvailableHours = async (selectedDate) => {
+    try {
+      const response = await fetch(`https://web-back-p.vercel.app/api/agenda/hours?date=${selectedDate}`);
+      if (!response.ok) {
+        throw new Error('Error al obtener las horas disponibles');
+      }
+      const data = await response.json();
+      setAvailableHours(data.availableHours); // Actualizar las horas disponibles
+    } catch (error) {
+      console.error(error.message);
+      setAvailableHours([]); // Vaciar las horas si ocurre un error
+    }
+  };
+
+  // Manejar el cambio de fecha y actualizar las horas disponibles
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    setDate(selectedDate);
+    setHora(''); // Resetear la hora seleccionada
+    fetchAvailableHours(selectedDate); // Obtener las horas disponibles para la fecha
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí puedes manejar la lógica para agendar la cita, por ejemplo, enviando los datos a un backend
-    console.log('Cita agendada:', { nombre, fecha, hora });
-    alert('Cita agendada con éxito');
-    setView('home'); // Volver a la página principal después de agendar
+
+    try {
+      const response = await fetch('https://web-back-p.vercel.app/api/agenda', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          date,
+          hora,
+          email,
+          name,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al agendar la cita');
+      }
+
+      const data = await response.json();
+      setMessage(data.message);
+    } catch (error) {
+      setMessage(error.message || 'Error al agendar la cita');
+    }
   };
 
   return (
     <div className="agendar-cita-container">
-      <h1>Agendar Cita</h1>
-      <form className="agendar-cita-form" onSubmit={handleAgendar}>
-        <div className="form-group">
-          <label htmlFor="nombre">Nombre:</label>
+      <h2>Agendar Cita</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group-cita">
+          <label htmlFor="name">Nombre:</label>
           <input 
             type="text" 
-            id="nombre" 
-            value={nombre} 
-            onChange={(e) => setNombre(e.target.value)} 
+            id="name" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)} 
             required 
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="fecha">Fecha:</label>
+        <div className="form-group-cita">
+          <label htmlFor="email">Email:</label>
+          <input 
+            type="email" 
+            id="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            required 
+          />
+        </div>
+        <div className="form-group-cita">
+          <label htmlFor="date">Fecha:</label>
           <input 
             type="date" 
-            id="fecha" 
-            value={fecha} 
-            onChange={(e) => setFecha(e.target.value)} 
+            id="date" 
+            value={date} 
+            onChange={handleDateChange} 
             required 
           />
         </div>
-        <div className="form-group">
+        <div className="form-group-cita">
           <label htmlFor="hora">Hora:</label>
-          <input 
-            type="time" 
+          <select 
             id="hora" 
             value={hora} 
             onChange={(e) => setHora(e.target.value)} 
-            required 
-          />
+            required
+            disabled={!date || availableHours.length === 0}
+          >
+            <option value="">Seleccione una hora</option>
+            {availableHours.map((hour) => (
+              <option key={hour} value={hour}>
+                {hour}
+              </option>
+            ))}
+          </select>
         </div>
-        <button type="submit" className="confirmar-btn">Confirmar Cita</button>
-        <button type="button" className="volver-btn" onClick={() => setView('home')}>Volver</button>
+        <button type="submit" disabled={!hora}>Generar Cita</button>
       </form>
+
+      {message && <p>{message}</p>}
+
+      {/* Botón para regresar */}
+      <button 
+        className="go-home-button" 
+        onClick={() => navigate('/home')}>
+        Volver
+      </button>
     </div>
   );
-}
+};
 
 export default AgendarCita;

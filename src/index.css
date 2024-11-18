@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  overflow: hidden; 
+  overflow: scroll; 
   display: flex;
   place-items: center;
   justify-content: center;

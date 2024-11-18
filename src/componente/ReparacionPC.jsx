@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/ReparacionPC.css'
 
 function ReparacionPC({ setView }) {
+  const navigate = useNavigate();
   return (
     <div className='Reparar-pc'>
       <h1>Reparacion de portatiles y PC </h1>
@@ -16,24 +18,18 @@ function ReparacionPC({ setView }) {
         />
 
         <div className="button-container-reparacion">
-  <button onClick={() => setView('home')} className="volver-servicio-btn">
-    Volver a Servicios
-  </button>
-  <button 
-    className="solicitar-servicio-btn"
-    onClick={() => setView('agendar-cita')}
-  >
-    Agendar Cita
-  </button>
-  <button 
-            className="generar-home-ticket-btn" // Nueva clase CSS para el botón de generar ticket
-            onClick={() => setView('home-ticket')} // Lógica para cambiar la vista a 'ticket'
-          >
-            Gestionar Ticket
-          </button>
-</div>
-</div>
-</div>
+        <button onClick={() => navigate('/home')} className="volver-servicio-btn">
+          Volver a Servicios
+        </button>
+        <button onClick={() => navigate('/agendar-cita')} className="solicitar-servicio-btn">
+          Agendar Cita
+        </button>
+        <button onClick={() => navigate('/home-ticket')} className="generar-home-ticket-btn">
+          Gestionar Ticket
+        </button>
+      </div>
+    </div>
+    </div>
   );
 }
 export default ReparacionPC;

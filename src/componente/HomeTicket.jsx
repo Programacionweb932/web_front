@@ -1,16 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function HomeTicket({ setView }) {
+function HomeTicket() {
+  const navigate = useNavigate();
+
   const handleCreateTicket = () => {
-    setView('ticket'); // Ir a la vista de creación de ticket
+    navigate('/ticket'); // Ir a la vista de creación de ticket
   };
 
-  const handleViewTicketsHistory = () => {
-    setView('history'); // Ir a la vista de historial de tickets
+  const handleViewHistorialTicket = () => {
+    navigate('/historial-ticket'); // Ir a la vista de historial de tickets
   };
 
   const handleBackToHome = () => {
-    setView('home'); // Volver a la vista principal de inicio
+    navigate('/home'); // Volver a la vista principal de inicio
   };
 
   return (
@@ -19,7 +22,7 @@ function HomeTicket({ setView }) {
       
       <div className="home-ticket-buttons">
         <button onClick={handleCreateTicket}>Crear Ticket</button>
-        <button onClick={handleViewTicketsHistory}>Ver Historial de Tickets</button>
+        <button onClick={handleViewHistorialTicket}>Ver Historial de Tickets</button>
         <button onClick={handleBackToHome}>Volver al Inicio</button>
       </div>
     </div>

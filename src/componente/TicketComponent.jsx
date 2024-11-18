@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Asegúrate de usar useNavigate
 import '../styles/TicketComponent.css';
 
 const TicketComponent = ({ setView }) => {  // Recibe setView como prop
@@ -10,6 +11,7 @@ const TicketComponent = ({ setView }) => {  // Recibe setView como prop
   const [subject, setSubject] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const navigate = useNavigate(); // Usamos navigate para redirigir
 
   const handleGenerateTicket = async () => {
     try {
@@ -130,12 +132,9 @@ const TicketComponent = ({ setView }) => {  // Recibe setView como prop
       {error && <p className="error-message">Error: {error}</p>}
 
       {/* Botón para regresar al home */}
-      <button 
-  className="ggo-home-ticket-btn" 
-  onClick={() => setView('home-ticket')} // Cambiar la vista a 'home' al hacer clic
->
-  Volver
-</button>
+      <button className="ggo-home-ticket-btn" onClick={() => navigate('/home-ticket')}>
+        Volver
+      </button>
     </div>
   );
 };

@@ -38,7 +38,7 @@ const AgendarCita = ({ setView }) => { // Recibe setView como prop
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/agenda', {
+      const response = await fetch('https://web-back-p.vercel.app/api/agenda', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ function Blog() {
       title: 'Mantenimiento Preventivo de PCs',
       description: 'El mantenimiento preventivo se realiza a equipos en funcionamiento con el fin de prevenir posibles daños causados por uso o desgaste,<br/> a diferencia del mantenimiento correctivo que repara aquellos que dejan de funcionar o están dañados.',
       media: [
-        { type: 'image', src: '/image/mantenimiento.jpg', alt: 'PC mantenimiento' },
+        { type: 'image', src: '/public/image/mantenimiento.jpg', alt: 'PC mantenimiento' },
         { type: 'video', src: '/videos/mantenimiento.mp4', alt: 'Video de mantenimiento' }
       ]
     },
@@ -18,8 +18,8 @@ function Blog() {
       title: 'Sistemas Operativos',
       description: 'Explora los diferentes sistemas operativos y aprende cómo elegir el adecuado para tus necesidades.<br/> Descubre sus ventajas, características y usos.',
       media: [
-        { type: 'image', src: '/image/sistemao-video.png', alt: 'Sistema operativo' },
-        { type: 'video', src: '/videos/sistema operativo.mp4', alt: 'Video de Sistema Operativo' }
+        { type: 'image', src: '/public/image/sistemao-video.png', alt: 'Sistema operativo' },
+        { type: 'video', src: '/public/videos/sistema operativo.mp4', alt: 'Video de Sistema Operativo' }
       ]
     },
   ];

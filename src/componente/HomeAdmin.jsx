@@ -46,7 +46,7 @@ function HomeAdmin() {
 
   const updateTicket = async (ticketId, status, adminDescription) => {
     try {
-      const response = await fetch('https://web-back-p.vercel.app/api/tickets/actualizar-estado', {
+      const response = await fetch('https://web-back-p.vercel.app/api/tickets/', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -6,6 +6,7 @@ function HomeAdmin() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [updateState, setUpdateState] = useState({ ticketId: '', status: '', adminDescription: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,7 +22,7 @@ function HomeAdmin() {
     setLoading(true);
     try {
       const response = await fetch('https://web-back-p.vercel.app/api/tickets/all', {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
@@ -34,14 +35,16 @@ function HomeAdmin() {
 
       const data = await response.json();
       setTickets(data.tickets || []);
+      setMessage(data.tickets?.length ? '' : 'No se encontraron tickets.');
     } catch (error) {
       setMessage(error.message);
+      setTickets([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const updateTicketStatus = async (ticketId, newStatus) => {
+  const updateTicket = async (ticketId, status, adminDescription) => {
     try {
       const response = await fetch('https://web-back-p.vercel.app/api/tickets/actualizar-estado', {
         method: 'PUT',
@@ -49,23 +52,18 @@ function HomeAdmin() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
         },
-        body: JSON.stringify({ ticketId, status: newStatus }),
+        body: JSON.stringify({ ticketId, status, adminDescription }),
       });
 
       if (!response.ok) {
-        throw new Error('Error al actualizar el estado del ticket.');
+        throw new Error('Error al actualizar el ticket.');
       }
 
       const data = await response.json();
-      // Actualiza el ticket en el estado local
-      setTickets((prevTickets) =>
-        prevTickets.map((ticket) =>
-          ticket._id === ticketId ? { ...ticket, status: data.ticket.status } : ticket
-        )
-      );
-      alert(data.message);
+      setMessage(data.message);
+      fetchTickets(); // Recargar la lista de tickets
     } catch (error) {
-      alert(error.message);
+      setMessage(error.message);
     }
   };
 
@@ -75,20 +73,34 @@ function HomeAdmin() {
     navigate('/login');
   };
 
+  const handleUpdateClick = () => {
+    const { ticketId, status, adminDescription } = updateState;
+    if (ticketId && status) {
+      updateTicket(ticketId, status, adminDescription);
+      setUpdateState({ ticketId: '', status: '', adminDescription: '' });
+    } else {
+      setMessage('Por favor selecciona un ticket y un estado.');
+    }
+  };
+
   return (
     <div className="home-admin">
-      <h1>Tickets Administración</h1>
+      <h1>Administración de Tickets</h1>
+
       {loading && <p>Cargando tickets...</p>}
       {message && <p>{message}</p>}
+
+      <h2>Lista de Tickets</h2>
       <table className="ticket-table">
         <thead>
           <tr>
             <th>Ticket</th>
             <th>Tema</th>
-            <th>Estado Ticket</th>
-            <th>Fecha Creación</th>
-            <th>Técnico Asignado</th>
-            <th>Acción</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Técnico</th>
+            <th>Descripción (Cliente)</th>
+            <th>Actualizar</th>
           </tr>
         </thead>
         <tbody>
@@ -99,20 +111,46 @@ function HomeAdmin() {
               <td>{ticket.status}</td>
               <td>{new Date(ticket.date).toLocaleString()}</td>
               <td>{ticket.assignedTechnician || 'No asignado'}</td>
+              <td>{ticket.adminDescription || 'Sin descripción'}</td>
               <td>
-                <select
-                  value={ticket.status}
-                  onChange={(e) => updateTicketStatus(ticket._id, e.target.value)}
+                <button
+                  onClick={() =>
+                    setUpdateState({ ticketId: ticket._id, status: ticket.status, adminDescription: '' })
+                  }
                 >
-                  <option value="Abierto">Abierto</option>
-                  <option value="En Proceso">En Proceso</option>
-                  <option value="Cerrado">Cerrado</option>
-                </select>
+                  Seleccionar
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {updateState.ticketId && (
+        <div className="update-ticket-form">
+          <h3>Actualizar Ticket</h3>
+          <label>
+            Estado:
+            <select
+              value={updateState.status}
+              onChange={(e) => setUpdateState((prev) => ({ ...prev, status: e.target.value }))}
+            >
+              <option value="Pendiente">Pendiente</option>
+              <option value="En Progreso">En Progreso</option>
+              <option value="Cerrado">Cerrado</option>
+            </select>
+          </label>
+          <label>
+            Descripción para el Cliente:
+            <textarea
+              value={updateState.adminDescription}
+              onChange={(e) => setUpdateState((prev) => ({ ...prev, adminDescription: e.target.value }))}
+            ></textarea>
+          </label>
+          <button onClick={handleUpdateClick}>Actualizar</button>
+        </div>
+      )}
+
       <button className="logout-button" onClick={handleLogout}>
         Cerrar Sesión
       </button>

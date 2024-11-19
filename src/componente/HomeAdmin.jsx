@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/HomeAdmin.css';
 
 function HomeAdmin() {
-  const [tickets, setTickets] = useState([]); // Cambié winners por tickets para más claridad
+  const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function HomeAdmin() {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || user.role !== 'admin') {
-      navigate('/login'); // Si no es admin o no está logueado, redirigir al login
+      navigate('/login');
     } else {
       fetchTickets();
     }
@@ -33,36 +33,53 @@ function HomeAdmin() {
       }
 
       const data = await response.json();
-      if (data.tickets && data.tickets.length > 0) {
-        setTickets(data.tickets);
-        setMessage('');
-      } else {
-        setTickets([]);
-        setMessage('No se encontraron tickets.');
-      }
+      setTickets(data.tickets || []);
     } catch (error) {
       setMessage(error.message);
-      setTickets([]);
     } finally {
       setLoading(false);
     }
   };
 
+  const updateTicketStatus = async (ticketId, newStatus) => {
+    try {
+      const response = await fetch('https://web-back-p.vercel.app/api/tickets/actualizar-estado', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: JSON.stringify({ ticketId, status: newStatus }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al actualizar el estado del ticket.');
+      }
+
+      const data = await response.json();
+      // Actualiza el ticket en el estado local
+      setTickets((prevTickets) =>
+        prevTickets.map((ticket) =>
+          ticket._id === ticketId ? { ...ticket, status: data.ticket.status } : ticket
+        )
+      );
+      alert(data.message);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('user');
-    localStorage.removeItem('authToken'); // Asegúrate de limpiar el token también
+    localStorage.removeItem('authToken');
     navigate('/login');
   };
 
   return (
     <div className="home-admin">
       <h1>Tickets Administración</h1>
-
       {loading && <p>Cargando tickets...</p>}
-
       {message && <p>{message}</p>}
-
-      <h2>Lista de Tickets</h2>
       <table className="ticket-table">
         <thead>
           <tr>
@@ -71,6 +88,7 @@ function HomeAdmin() {
             <th>Estado Ticket</th>
             <th>Fecha Creación</th>
             <th>Técnico Asignado</th>
+            <th>Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -81,13 +99,20 @@ function HomeAdmin() {
               <td>{ticket.status}</td>
               <td>{new Date(ticket.date).toLocaleString()}</td>
               <td>{ticket.assignedTechnician || 'No asignado'}</td>
+              <td>
+                <select
+                  value={ticket.status}
+                  onChange={(e) => updateTicketStatus(ticket._id, e.target.value)}
+                >
+                  <option value="Abierto">Abierto</option>
+                  <option value="En Proceso">En Proceso</option>
+                  <option value="Cerrado">Cerrado</option>
+                </select>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      <br />
-      <br />
       <button className="logout-button" onClick={handleLogout}>
         Cerrar Sesión
       </button>

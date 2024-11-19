@@ -25,7 +25,7 @@ function Home({ user, setUser, setView }) {
     <div className="home-container">
       <div className="welcome-message">
         <h1>Bienvenido al Mundo de la Tecnología</h1>
-        <h2>Hola, {user && user.name ? user.name : user}!</h2> {/* Ajusta según cómo es el objeto 'user' */}
+        <h2>Hola, {user && user ? user : user}!</h2> {/* Ajusta según cómo es el objeto 'user' */}
         <h3>¿Qué servicio deseas?</h3>
       </div>
 

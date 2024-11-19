@@ -133,6 +133,7 @@ export default function AppWrapper() {
         <Route path="/reparacion" element={<ReparacionPC />} />
         <Route path="/asistencia-tecnica" element={<AsistenciaTecnica />} />
         <Route path="/instalacion-office" element={<InstalacionOffice />} />
+        <Route path="/admin" element={<RegisterAdmin />} />
         <Route path="/blog" element={<Blog />} />
       </Routes>
     </Router>

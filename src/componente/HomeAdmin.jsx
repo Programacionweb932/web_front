@@ -22,7 +22,7 @@ function HomeAdmin() {
     setLoading(true);
     try {
       const response = await fetch('https://web-back-p.vercel.app/api/tickets/all', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,

@@ -44,6 +44,14 @@ function HomeAdmin() {
   };
 
   const updateTicket = async (ticketId, status, adminDescription) => {
+    // Si el valor de adminDescription o status está vacío, no se realiza la actualización
+    if (!status && !adminDescription) {
+      setMessage('Debe proporcionar al menos un campo para actualizar.');
+      return;
+    }
+  
+    setMessage(''); // Limpiar mensajes previos
+  
     try {
       const response = await fetch('https://web-back-p.vercel.app/api/tickets/actualizar-estado', {
         method: 'PUT',
@@ -53,18 +61,28 @@ function HomeAdmin() {
         },
         body: JSON.stringify({ ticketId, status, adminDescription }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Error al actualizar el ticket.');
       }
-
+  
       const data = await response.json();
+      
+      // Si la actualización es exitosa, actualiza los tickets en el estado
+      setTickets((prevTickets) =>
+        prevTickets.map((ticket) =>
+          ticket._id === ticketId
+            ? { ...ticket, status: data.ticket.status, adminDescription: data.ticket.adminDescription }
+            : ticket
+        )
+      );
+  
       setMessage(data.message);
     } catch (error) {
       setMessage(error.message);
     }
   };
-
+  
   const handleFieldChange = (ticketId, field, value) => {
     setTickets((prevTickets) =>
       prevTickets.map((ticket) =>
@@ -72,11 +90,13 @@ function HomeAdmin() {
       )
     );
   };
-
+  
   const handleBlur = (ticketId, status, adminDescription) => {
     updateTicket(ticketId, status, adminDescription);
   };
 
+
+  
   const handleLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('authToken');

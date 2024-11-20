@@ -100,7 +100,7 @@ const HistorialTicket = () => {
                   <td>{ticket.description}</td>
                   <td>{ticket.status}</td>
                   <td>{new Date(ticket.date).toLocaleString()}</td>
-                  <td>{ticket.response || 'No disponible'}</td>
+                  <td>{ticket.adminDescription || 'No proporcionada'}</td>
                 </tr>
               ))}
             </tbody>

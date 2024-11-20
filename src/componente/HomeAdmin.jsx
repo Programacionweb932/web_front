@@ -6,7 +6,6 @@ function HomeAdmin() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [updateState, setUpdateState] = useState({ ticketId: '', status: '', adminDescription: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,26 +60,27 @@ function HomeAdmin() {
 
       const data = await response.json();
       setMessage(data.message);
-      fetchTickets(); // Recargar la lista de tickets
     } catch (error) {
       setMessage(error.message);
     }
+  };
+
+  const handleFieldChange = (ticketId, field, value) => {
+    setTickets((prevTickets) =>
+      prevTickets.map((ticket) =>
+        ticket._id === ticketId ? { ...ticket, [field]: value } : ticket
+      )
+    );
+  };
+
+  const handleBlur = (ticketId, status, adminDescription) => {
+    updateTicket(ticketId, status, adminDescription);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('authToken');
     navigate('/login');
-  };
-
-  const handleUpdateClick = () => {
-    const { ticketId, status, adminDescription } = updateState;
-    if (ticketId && status) {
-      updateTicket(ticketId, status, adminDescription);
-      setUpdateState({ ticketId: '', status: '', adminDescription: '' });
-    } else {
-      setMessage('Por favor selecciona un ticket y un estado.');
-    }
   };
 
   return (
@@ -98,9 +98,7 @@ function HomeAdmin() {
             <th>Tema</th>
             <th>Estado</th>
             <th>Fecha</th>
-            <th>Técnico</th>
-            <th>Descripción (Cliente)</th>
-            <th>Actualizar</th>
+            <th>Descripción para el Cliente</th>
           </tr>
         </thead>
         <tbody>
@@ -108,48 +106,29 @@ function HomeAdmin() {
             <tr key={ticket._id}>
               <td>{ticket.ticketNumber}</td>
               <td>{ticket.subject}</td>
-              <td>{ticket.status}</td>
-              <td>{new Date(ticket.date).toLocaleString()}</td>
-              <td>{ticket.assignedTechnician || 'No asignado'}</td>
-              <td>{ticket.adminDescription || 'Sin descripción'}</td>
               <td>
-                <button
-                  onClick={() =>
-                    setUpdateState({ ticketId: ticket._id, status: ticket.status, adminDescription: '' })
-                  }
+                <select
+                  value={ticket.status}
+                  onChange={(e) => handleFieldChange(ticket._id, 'status', e.target.value)}
+                  onBlur={() => handleBlur(ticket._id, ticket.status, ticket.adminDescription)}
                 >
-                  Seleccionar
-                </button>
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="En Progreso">En Progreso</option>
+                  <option value="Cerrado">Cerrado</option>
+                </select>
+              </td>
+              <td>{new Date(ticket.date).toLocaleString()}</td>
+              <td>
+                <textarea
+                  value={ticket.adminDescription || ''}
+                  onChange={(e) => handleFieldChange(ticket._id, 'adminDescription', e.target.value)}
+                  onBlur={() => handleBlur(ticket._id, ticket.status, ticket.adminDescription)}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {updateState.ticketId && (
-        <div className="update-ticket-form">
-          <h3>Actualizar Ticket</h3>
-          <label>
-            Estado:
-            <select
-              value={updateState.status}
-              onChange={(e) => setUpdateState((prev) => ({ ...prev, status: e.target.value }))}
-            >
-              <option value="Pendiente">Pendiente</option>
-              <option value="En Progreso">En Progreso</option>
-              <option value="Cerrado">Cerrado</option>
-            </select>
-          </label>
-          <label>
-            Descripción para el Cliente:
-            <textarea
-              value={updateState.adminDescription}
-              onChange={(e) => setUpdateState((prev) => ({ ...prev, adminDescription: e.target.value }))}
-            ></textarea>
-          </label>
-          <button onClick={handleUpdateClick}>Actualizar</button>
-        </div>
-      )}
 
       <button className="logout-button" onClick={handleLogout}>
         Cerrar Sesión

@@ -4,6 +4,7 @@ import '../styles/Home.css';
 
 function Home({ user, setUser, setView }) {
   const navigate = useNavigate();
+  
 
   // Lista de servicios
   const services = [
@@ -19,13 +20,11 @@ function Home({ user, setUser, setView }) {
     navigate(servicePath);  // Navega a la ruta correspondiente
   };
 
-
-
   return (
     <div className="home-container">
       <div className="welcome-message">
         <h1>Bienvenido al Mundo de la Tecnología</h1>
-        <h2>Hola, {user && user ? user : user}!</h2> {/* Ajusta según cómo es el objeto 'user' */}
+        <h2>Hola, {user}!</h2>{/* Asegúrate de que el username esté disponible */}
         <h3>¿Qué servicio deseas?</h3>
       </div>
 
@@ -53,8 +52,8 @@ function Home({ user, setUser, setView }) {
       </button>
 
       <button className="logout-button" onClick={() => navigate('/login')}>
-  Cerrar Sesión
- </button>
+        Cerrar Sesión
+      </button>
     </div>
   );
 }

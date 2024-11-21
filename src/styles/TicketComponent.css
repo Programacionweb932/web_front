@@ -166,3 +166,22 @@
   .ggo-home-ticket-btn:hover {
     background-color: #45a049; /* Color al pasar el ratón */
   }
+  .error-input {
+    border: 2px solid red;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  .ticket-generated {
+    color: black;
+    font-family: Arial, sans-serif;
+  }
+  
+  .ticket-generated pre {
+    color: black; /* Asegura que el texto dentro de <pre> tenga color negro */
+  }
+  
+    

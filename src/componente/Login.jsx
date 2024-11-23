@@ -12,44 +12,39 @@ function Formulario({ setUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (usuario === '' || contraseña === '') {
-      setError(true);
+    console.log('handleSubmit llamado');
+  
+   
+  if (usuario === '' || contraseña === '') {
+    setError('Todos los campos son obligatorios');
+    return;
+  }
+
+  try {
+    const response = await fetch('https://web-back-p.vercel.app/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: usuario, password: contraseña }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      setError(errorData.msg || 'Error en el inicio de sesión');
       return;
     }
 
-    setError(false);
+    const data = await response.json();
+    const { token, user } = data;
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
 
-    try {
-      // Realizamos la solicitud al backend
-      const response = await fetch('https://web-back-p.vercel.app/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: usuario, password: contraseña }),
-      });
+    navigate(user.role === 'admin' ? '/home-admin' : '/home');
+  } catch (err) {
+    console.error('Error:', err);
+    setError('Error al conectar con el servidor');
+  }
+};
 
-      if (response.ok) {
-        const data = await response.json();
-        const { token, user } = data; // Obtén el token y los datos del usuario
-
-        // Guarda el token y la información del usuario en localStorage
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('token', token);
-
-        // Redirige inicialmente a la página de inicio (para usuarios comunes)
-        setView('home'); // Cambiar la vista con setView
-        // Si es admin, redirigir a home-admin
-        if (user.role === 'admin') {
-          setView('home-admin'); // Cambiar la vista con setView
-          navigate('/home-admin'); // Redirige a home-admin si es admin
-        }
-      } else {
-        const errorData = await response.json();
-        setError(errorData.msg || 'Usuario o contraseña incorrectos');
-      }
-    } catch (error) {
-      setError('Error al iniciar sesión.'); // Manejamos cualquier error en la red
-    }
-  };
 
   return (
     <section className="formulario-container">

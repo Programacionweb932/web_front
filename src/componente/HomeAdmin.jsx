@@ -192,28 +192,6 @@ function HomeAdmin() {
         </tbody>
       </table>
 
-      <h2>Historial de Citas Reservadas</h2>
-      <table className="appointments-table">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Nombre Cliente</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map((appointment) => (
-            <tr key={appointment._id}>
-              <td>{appointment.date}</td>
-              <td>{appointment.time}</td>
-              <td>{appointment.clientName}</td>
-              <td>{appointment.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
       <button className="logout-button" onClick={handleLogout}>
         Cerrar Sesión
       </button>

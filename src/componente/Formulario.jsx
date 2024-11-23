@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Asegúrate de usar useNavigate
-import '../styles/Formulario.css'
+import '../styles/Formulario.css';
 
 function Formulario({ setUser }) {
   const [usuario, setUsuario] = useState('');
   const [contraseña, setContraseña] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(''); // Cambiado a cadena para mensajes específicos
   const [view, setView] = useState(null); // Nueva variable de estado para manejar la vista
   const navigate = useNavigate(); // Usamos navigate para redirigir
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (usuario === '' || contraseña === '') {
-      setError(true);
+    // Validación de campos vacíos con mensajes personalizados
+    if (usuario === '') {
+      setError('Debes ingresar un usuario.');
       return;
     }
 
-    setError(false);
+    if (contraseña === '') {
+      setError('Debes ingresar una contraseña.');
+      return;
+    }
+
+    setError(''); // Limpiar errores previos
 
     try {
       // Realizamos la solicitud al backend
@@ -54,7 +60,7 @@ function Formulario({ setUser }) {
 
   return (
     <section className="formulario-container">
-      <h1>INICIO DE SESION</h1>
+      <h1>INICIO DE SESIÓN</h1>
       <form className='formulario' onSubmit={handleSubmit}>
         <div className='form-group'>
           <label htmlFor='usuario'>Usuario</label>

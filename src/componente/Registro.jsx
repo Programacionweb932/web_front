@@ -11,6 +11,22 @@ function Registro({ setRegisteredUsers }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (username === '') {
+      setError('Debes ingresar un usuario.');
+      return;
+    }
+    if (email === '') {
+      setError('Debes ingresar una correo.');
+      return;
+    }
+    if (contraseña === '') {
+      setError('Debes ingresar una contraseña.');
+      return;
+    }
+    
+
+
+    // Validación de contraseñas
     if (password !== confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
@@ -30,6 +46,7 @@ function Registro({ setRegisteredUsers }) {
       if (response.ok) {
         setRegisteredUsers(prevUsers => [...prevUsers, { username, password }]); // Actualiza el estado local
         alert('Registro exitoso');
+        setError(null); // Limpia el error si el registro fue exitoso
       } else {
         setError(data.message); // Maneja el error devuelto por la API
       }
@@ -40,7 +57,7 @@ function Registro({ setRegisteredUsers }) {
   };
 
   return (
-    <div className="registro-container"> {/* Corregido: "className" en lugar de "classname" */}
+    <div className="registro-container">
       <h1>Registro</h1>
       <form onSubmit={handleSubmit}>
         <div className="input-field">
@@ -50,7 +67,7 @@ function Registro({ setRegisteredUsers }) {
             type="text" 
             value={username} 
             onChange={event => setUsername(event.target.value)}
-            placeholder='ingrese su usuario'
+            placeholder='Ingrese su usuario'
           />
         </div>
         <div className="input-field">
@@ -60,7 +77,7 @@ function Registro({ setRegisteredUsers }) {
             type="email" 
             value={email} 
             onChange={event => setEmail(event.target.value)} 
-            placeholder='ingrese su correo'
+            placeholder='Ingrese su correo'
           />
         </div>
         <div className="input-field">
@@ -70,7 +87,7 @@ function Registro({ setRegisteredUsers }) {
             type="password" 
             value={password} 
             onChange={event => setPassword(event.target.value)} 
-            placeholder='ingrese su contraseña'
+            placeholder='Ingrese su contraseña'
           />
         </div>
         <div className="input-field">

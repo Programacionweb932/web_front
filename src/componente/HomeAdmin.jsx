@@ -4,6 +4,7 @@ import '../styles/HomeAdmin.css';
 
 function HomeAdmin() {
   const [tickets, setTickets] = useState([]);
+  const [appointments, setAppointments] = useState([]);  // Estado para las citas
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -14,9 +15,11 @@ function HomeAdmin() {
       navigate('/login');
     } else {
       fetchTickets();
+      fetchAppointments();  // Llamar a la función para obtener las citas
     }
   }, [navigate]);
 
+  // Obtener los tickets
   const fetchTickets = async () => {
     setLoading(true);
     try {
@@ -43,15 +46,46 @@ function HomeAdmin() {
     }
   };
 
+  // Obtener las citas (historial de citas)
+  const fetchAppointments = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('https://web-back-p.vercel.app/api/historial-citas', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+      });
+  
+      if (response.status === 401) {
+        throw new Error('No autorizado. Por favor, inicie sesión nuevamente.');
+      } else if (response.status === 404) {
+        throw new Error('No se encontraron citas en el historial.');
+      } else if (!response.ok) {
+        throw new Error('Error inesperado al obtener las citas.');
+      }
+  
+      const data = await response.json();
+      setAppointments(data.appointments || []); // Asegúrate de usar `appointments`
+      setMessage(data.appointments?.length ? '' : 'No se encontraron citas.');
+    } catch (error) {
+      setMessage(error.message);
+      setAppointments([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
   const updateTicket = async (ticketId, status, adminDescription) => {
-    // Si el valor de adminDescription o status está vacío, no se realiza la actualización
     if (!status && !adminDescription) {
       setMessage('Debe proporcionar al menos un campo para actualizar.');
       return;
     }
-  
-    setMessage(''); // Limpiar mensajes previos
-  
+
+    setMessage('');
+
     try {
       const response = await fetch('https://web-back-p.vercel.app/api/tickets/actualizar-estado', {
         method: 'PUT',
@@ -61,11 +95,11 @@ function HomeAdmin() {
         },
         body: JSON.stringify({ ticketId, status, adminDescription }),
       });
-  
+
       if (!response.ok) {
         throw new Error('Error al actualizar el ticket.');
       }
-  
+
       const data = await response.json();
       
       // Si la actualización es exitosa, actualiza los tickets en el estado
@@ -76,13 +110,13 @@ function HomeAdmin() {
             : ticket
         )
       );
-  
+
       setMessage(data.message);
     } catch (error) {
       setMessage(error.message);
     }
   };
-  
+
   const handleFieldChange = (ticketId, field, value) => {
     setTickets((prevTickets) =>
       prevTickets.map((ticket) =>
@@ -90,61 +124,91 @@ function HomeAdmin() {
       )
     );
   };
-  
-  const handleBlur = (ticketId, status, adminDescription) => {
-    updateTicket(ticketId, status, adminDescription);
-  };
 
-
-  
   const handleLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('authToken');
     navigate('/login');
   };
 
+  const handleUpdateClick = (ticketId, status, adminDescription) => {
+    updateTicket(ticketId, status, adminDescription);
+  };
+
   return (
     <div className="home-admin">
       <h1>Administración de Tickets</h1>
 
-      {loading && <p>Cargando tickets...</p>}
+      {loading && <p>Cargando información...</p>}
       {message && <p>{message}</p>}
 
       <h2>Lista de Tickets</h2>
       <table className="ticket-table">
         <thead>
           <tr>
-            <th>Ticket</th>
-            <th>Tema</th>
+            <th>Número de Ticket</th>
+            <th>Nombre Cliente</th>
+            <th>Tema del Ticket</th>
+            <th>Descripción del Ticket</th>
             <th>Estado</th>
-            <th>Fecha</th>
-            <th>Descripción para el Cliente</th>
+            <th>Respuesta del Administrador</th>
+            <th>Acción</th>
           </tr>
         </thead>
         <tbody>
           {tickets.map((ticket) => (
             <tr key={ticket._id}>
               <td>{ticket.ticketNumber}</td>
+              <td>{ticket.name}</td>
               <td>{ticket.subject}</td>
+              <td>{ticket.description}</td>
               <td>
                 <select
                   value={ticket.status}
                   onChange={(e) => handleFieldChange(ticket._id, 'status', e.target.value)}
-                  onBlur={() => handleBlur(ticket._id, ticket.status, ticket.adminDescription)}
                 >
                   <option value="Pendiente">Pendiente</option>
                   <option value="En Progreso">En Progreso</option>
                   <option value="Cerrado">Cerrado</option>
                 </select>
               </td>
-              <td>{new Date(ticket.date).toLocaleString()}</td>
               <td>
                 <textarea
                   value={ticket.adminDescription || ''}
                   onChange={(e) => handleFieldChange(ticket._id, 'adminDescription', e.target.value)}
-                  onBlur={() => handleBlur(ticket._id, ticket.status, ticket.adminDescription)}
                 />
               </td>
+              <td>
+                <button
+                  onClick={() =>
+                    handleUpdateClick(ticket._id, ticket.status, ticket.adminDescription)
+                  }
+                >
+                  Actualizar Ticket
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2>Historial de Citas Reservadas</h2>
+      <table className="appointments-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Nombre Cliente</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {appointments.map((appointment) => (
+            <tr key={appointment._id}>
+              <td>{appointment.date}</td>
+              <td>{appointment.time}</td>
+              <td>{appointment.clientName}</td>
+              <td>{appointment.status}</td>
             </tr>
           ))}
         </tbody>

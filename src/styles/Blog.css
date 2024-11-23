@@ -4,7 +4,7 @@
   margin: 0 auto;
   padding: 20px;
   font-family: 'Times New Roman', Times, serif;
-  background-color: #fdfdfd;
+  background-color: #fdfdfd2a;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -13,7 +13,7 @@
 .blog-title {
   text-align: center;
   align-items: center;
-  color: #000; /* Texto en negro */
+  color: #ffffff; /* Texto en negro */
   font-size: 2.5em;
   margin-bottom: 20px;
   font-weight: bold;
@@ -28,7 +28,7 @@
 
 /* Estilo de cada post */
 .blog-post {
-  background-color: #fff;
+  background-color: #fdfdfd2a;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -41,13 +41,13 @@
 .blog-post h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #000; /* Texto en negro */
+  color: #ffffff; /* Texto en negro */
   align-items: center;
   font-family: 'Times New Roman', Times, serif;
 }
 
 .blog-post p {
-  color: #000; /* Texto en negro */
+  color: #fcfcfc; /* Texto en negro */
   font-size: 1rem;
   align-items: center;
   line-height: 1.6;
@@ -113,6 +113,13 @@
 }
 
 /* Botón de volver */
+.backBotton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh; /* Ajusta según el tamaño que necesites */
+}
+
 .back-button {
   display: inline-block;
   padding: 10px 20px;

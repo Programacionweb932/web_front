@@ -135,26 +135,10 @@ const TicketComponent = ({ setView }) => {
 
       {ticket && (
         <div className="ticket-generated">
-          <h3>Ticket Generado Exitosamente:</h3>
-          <pre>{JSON.stringify(ticket, null, 2)}</pre>
+          <h3>Ticket Generado Exitosamente</h3>
         </div>
       )}
 
-      {ticketsHistory.length > 0 && (
-        <div className="ticket-history">
-          <h3>Historial de Tickets</h3>
-          <ul>
-            {ticketsHistory.map((ticket) => (
-              <li key={ticket._id}>
-                <p>Descripción: {ticket.description}</p>
-                <p>Estado: {ticket.status}</p>
-                <p>Respuesta: {ticket.response}</p>
-                <p>Fecha: {new Date(ticket.date).toLocaleString()}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
 
       {error && <p className="error-message">Error: {error}</p>}
 

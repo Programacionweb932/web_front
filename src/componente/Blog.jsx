@@ -22,7 +22,44 @@ function Blog() {
         { type: 'video', src: '/videos/sistema operativo.mp4', alt: 'Video de Sistema Operativo' }
       ]
     },
+    {
+      title: 'Reparación de Portátiles y PCs',
+      description: 'Ofrecemos servicios de reparación para portátiles y PCs de todas las marcas y modelos.<br/> Desde problemas de hardware hasta fallos de software, estamos aquí para solucionar cualquier inconveniente.',
+      media: [
+        { type: 'image', src: '/image/reparacionpc.jpeg', alt: 'Reparación de PC' },
+        { type: 'video', src: '/videos/reparacion.mp4', alt: 'Video de reparación de PCs' }
+      ]
+    },
+    
+    {
+      title:'¿Cómo cuidar mi computadora portátil?',
+      description: '1. Limpie su portátil regularmente con un paño suave. <br/> 2. No lo utilices sobre camas o almohadas para evitar el sobrecalentamiento. <br/> 3. Actualiza tu sistema operativo y programas con frecuencia. <br/> 4. Apágalo o reinícialo al menos una vez por semana.',
+      media: [
+        { type: 'video', src: '/videos/consejo.mp4', alt: '' }
+      ]
+    },
+
+
+
+
+    {
+      title: 'Asistencia Técnica y Remota',
+      description: 'Brindamos soporte técnico tanto presencial como remoto.<br/> Soluciona problemas técnicos sin moverte de casa con nuestra asistencia remota.',
+      media: [
+        { type: 'image', src: '/image/asist.png', alt: 'Asistencia técnica' },
+        { type: 'video', src: '/videos/asistencia.mp4', alt: 'Video de asistencia remota' }
+      ]
+    },
+    {
+      title: 'Instalación de Office',
+      description: 'Instalamos y configuramos el paquete de Office para que puedas trabajar sin interrupciones.<br/> Incluye Word, Excel, PowerPoint, y más.',
+      media: [
+        { type: 'image', src: '/image/microsoftoffice.jpg', alt: 'Instalación de Office' },
+        { type: 'video', src: '/videos/Office.mp4', alt: 'Video de instalación de Office' }
+      ]
+    }
   ];
+  
 
   // Función para volver al inicio
   const handleBack = () => {
@@ -59,9 +96,11 @@ function Blog() {
           </div>
         ))}
       </div>
+      <div class="backBotton">
       <button className="back-button" onClick={handleBack}>
         Volver al Inicio
       </button>
+      </div>
     </div>
   );
 }

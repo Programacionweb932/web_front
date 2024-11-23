@@ -2,13 +2,13 @@ body {
     font-family: Arial, sans-serif; /* Fuente legible */
   }
   
-  h1 {
+  .asistencia-container h1 {
     color: #fdfdfd; /* Color del texto del título */
     text-align: center; /* Centrar el título */
     margin: 20px 0; /* Espaciado superior e inferior */
   }
   
-  p {
+  .asistencia-container p {
     color: #fdfdfd; /* Color del texto del párrafo */
     text-align: center; /* Centrar el párrafo */
     font-size: 18px; /* Tamaño de fuente para el párrafo */

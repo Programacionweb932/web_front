@@ -9,6 +9,7 @@
   }
   /* Título */
   .InstalacionOS h1 {
+    align-items: center;
     font-size: 2em;
     margin-bottom: 10px;
     color: #f2f2f2;
@@ -16,6 +17,7 @@
   
   /* Párrafo */
   .InstalacionOS p {
+    align-items: center;
     font-size: 1.1em;
     line-height: 1.6;
     margin-bottom: 20px;
